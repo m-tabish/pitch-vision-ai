@@ -219,7 +219,7 @@ export async function generateScoutingReportPdf(data: ScoutingReportData): Promi
   const rawSummary = data.numbersOnlyOutput?.evaluation?.technical_summary || "No raw summary available.";
   page.drawText(cleanText(rawSummary), {
     x: leftColX + 15,
-    y: colY + colHeight - 145, // Allocate space
+    y: colY + colHeight - 55, // Allocate space just below the title
     size: 7.2,
     font: fontRegular,
     color: textColor,
