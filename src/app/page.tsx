@@ -907,6 +907,10 @@ _Analyzed via PitchVision AI Core._`;
             </div>
           )}
 
+        </section>
+
+        {/* FULL-WIDTH SCRIBING/REPORTING BLOCK */}
+        <div className="lg:col-span-12 w-full mt-4">
           {/* EVALUATION DOSSIER */}
           {agentOutput ? (
             <div className="rounded-2xl border border-zinc-800/80 bg-zinc-900/35 overflow-hidden flex flex-col gap-6 p-5 relative">
@@ -990,7 +994,7 @@ _Analyzed via PitchVision AI Core._`;
 
               {/* Document Preview Frame */}
               <div className="w-full overflow-x-auto bg-[#050508] border border-zinc-850/80 p-6 rounded-2xl flex justify-center items-start">
-                <div className="origin-top scale-[0.8] md:scale-[0.9] lg:scale-[1.0] my-2">
+                <div className="origin-top scale-[0.7] sm:scale-[0.85] lg:scale-100 my-2">
                   <ScoutingReportView
                     data={{
                       playerName,
@@ -1017,7 +1021,7 @@ _Analyzed via PitchVision AI Core._`;
             </div>
           )}
 
-        </section>
+        </div>
 
       </main>
 
