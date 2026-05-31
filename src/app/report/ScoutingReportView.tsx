@@ -43,8 +43,9 @@ export default function ScoutingReportView({ data }: ScoutingReportViewProps) {
       ];
     } else {
       return [
-        { name: "Leading Elbow Angle", actual: calculatedBiometrics?.leading_elbow_angle, standard: "65° - 100°" },
-        { name: "Front Knee Stride Flex", actual: calculatedBiometrics?.front_knee_flex_angle, standard: "115° - 145°" },
+        { name: "Leading Elbow Angle", actual: calculatedBiometrics?.leading_elbow_angle, standard: "95° - 115° (Elite)" },
+        { name: "Front Knee Stride Flex", actual: calculatedBiometrics?.front_knee_flex_angle, standard: "110° - 135° (Elite)" },
+        { name: "Back Hip Extension", actual: calculatedBiometrics?.back_hip_angle, standard: "165° - 180° (Elite)" },
         { name: "Head/Shoulder Alignment", actual: calculatedBiometrics?.head_alignment, standard: "< 0.15 deviation" }
       ];
     }

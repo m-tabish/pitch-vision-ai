@@ -34,8 +34,9 @@ export function generateScoutingReportHtml(data: ScoutingReportData): string {
     { label: "Front Knee Bracing Angle", val: data.calculatedBiometrics?.front_knee_bracing_angle, limit: "160° - 180°" },
     { label: "Torso Lateral Flexion", val: data.calculatedBiometrics?.torso_lateral_flexion_angle, limit: "20° - 30°" }
   ] : [
-    { label: "Leading Elbow Angle", val: data.calculatedBiometrics?.leading_elbow_angle, limit: "65° - 100°" },
-    { label: "Front Knee Stride Flex", val: data.calculatedBiometrics?.front_knee_flex_angle, limit: "115° - 145°" },
+    { label: "Leading Elbow Angle", val: data.calculatedBiometrics?.leading_elbow_angle, limit: "95° - 115° (Elite)" },
+    { label: "Front Knee Stride Flex", val: data.calculatedBiometrics?.front_knee_flex_angle, limit: "110° - 135° (Elite)" },
+    { label: "Back Hip Extension", val: data.calculatedBiometrics?.back_hip_angle, limit: "165° - 180° (Elite)" },
     { label: "Head/Shoulder Alignment", val: data.calculatedBiometrics?.head_alignment, limit: "< 0.15 deviation" }
   ];
 
