@@ -8,14 +8,14 @@ export async function GET() {
   return NextResponse.json({ 
     status: "ok", 
     message: "PitchVision AI API is live",
-    env_configured: !!process.env.GOOGLE_GENERATIVE_AI_API_KEY,
-    timestamp: new Date().toISOString()
+    env_configured: !!(process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.GEMINI_API_KEY),
+    is_live: true
   });
 }
 
 export async function POST(req: Request) {
   try {
-    const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+    const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.GEMINI_API_KEY;
     
     if (!apiKey) {
       return NextResponse.json({ error: "Config Error", message: "API Key missing" }, { status: 500 });

@@ -7,6 +7,7 @@ import {
   CheckCircle, 
   ChevronRight, 
   Cpu, 
+  Mail,
   MessageSquare, 
   Play, 
   Pause, 
@@ -61,6 +62,8 @@ export default function Home() {
   const [calculatedBiometrics, setCalculatedBiometrics] = useState<any>(null);
   const [engineAnalysis, setEngineAnalysis] = useState<any>(null);
   const [agentOutput, setAgentOutput] = useState<any>(null);
+  const [userEmail, setUserEmail] = useState("");
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
 
   // Terminal Console Logs State
   const [logs, setLogs] = useState<LogEntry[]>([]);
@@ -464,6 +467,68 @@ _Analyzed via PitchVision AI Core._`;
     
     const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank");
+  };
+
+  const handleEmailShare = async () => {
+    if (!userEmail) {
+      addLog("⚠️ Please enter an email address first.", "System", "warning");
+      return;
+    }
+
+    if (!agentOutput) {
+      addLog("⚠️ Complete analysis first.", "System", "warning");
+      return;
+    }
+
+    setIsSendingEmail(true);
+    addLog("📧 Generating PDF and dispatching email via Resend...", "System", "info");
+
+    let frameDataUrl = null;
+    if (videoRef.current) {
+      try {
+        const video = videoRef.current;
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          frameDataUrl = canvas.toDataURL("image/jpeg", 0.7);
+        }
+      } catch (e) {
+        console.error("Frame capture failed:", e);
+      }
+    }
+
+    try {
+      const res = await fetch("/api/send-report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: userEmail,
+          playerName,
+          location,
+          discipline,
+          hand,
+          calculatedBiometrics,
+          engineAnalysis,
+          agentOutput,
+          capturedFrameUrl: frameDataUrl,
+          analysisTimestamp: new Date().toISOString()
+        })
+      });
+
+      const parsedResponse = await res.json();
+      if (res.ok && parsedResponse.success) {
+        addLog(`✅ Scouting dossier successfully emailed to ${userEmail}`, "Evaluation", "success");
+      } else {
+        addLog(`❌ Email failed: ${parsedResponse.message || "Unknown error"}`, "System", "error");
+      }
+    } catch (error: any) {
+      addLog(`❌ Email request failed: ${error.message}`, "System", "error");
+    } finally {
+      setIsSendingEmail(false);
+    }
   };
 
   return (
@@ -891,6 +956,39 @@ _Analyzed via PitchVision AI Core._`;
                   <Share2 className="w-3.5 h-3.5" />
                   Share Report
                 </button>
+              </div>
+
+              {/* Email dispatch section */}
+              <div className="border-t border-zinc-850 pt-4 space-y-2">
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">
+                  Dispatch Email Dossier
+                </label>
+                <div className="flex gap-2">
+                  <input
+                    type="email"
+                    value={userEmail}
+                    onChange={(e) => setUserEmail(e.target.value)}
+                    placeholder="scout@upca.org.in"
+                    className="flex-1 bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 transition-colors"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleEmailShare}
+                    disabled={isSendingEmail || !userEmail}
+                    className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
+                      isSendingEmail || !userEmail
+                        ? "bg-zinc-800 text-zinc-500 cursor-not-allowed"
+                        : "bg-white text-black hover:bg-zinc-200"
+                    }`}
+                  >
+                    {isSendingEmail ? (
+                      <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                    ) : (
+                      <Mail className="w-3.5 h-3.5" />
+                    )}
+                    {isSendingEmail ? "Sending..." : "Send"}
+                  </button>
+                </div>
               </div>
 
             </div>
