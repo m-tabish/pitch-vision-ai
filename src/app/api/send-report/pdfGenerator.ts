@@ -1,5 +1,8 @@
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import { ScoutingReportData } from './template';
+import fs from 'fs';
+import path from 'path';
+import fontkit from '@pdf-lib/fontkit';
 
 // Helper to filter out emojis and characters that WinAnsi standard fonts cannot encode (0x00 - 0xFF)
 function cleanText(str: string): string {
@@ -11,8 +14,19 @@ function cleanText(str: string): string {
     .trim();
 }
 
+// Helper to keep Devanagari (Hindi/Awadhi) characters along with standard characters for custom font rendering
+function cleanVernacularText(str: string): string {
+  if (!str) return "";
+  return str
+    .replace(/[\u{1F300}-\u{1F5FF}\u{1F600}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}\u{1F1E0}-\u{1F1FF}]/gu, '')
+    .replace(/[^\x00-\xFF\u0900-\u097F\u200b-\u200d\u2010-\u201d]/g, '') // Allow Latin, Devanagari, and basic punctuation
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 export async function generateScoutingReportPdf(data: ScoutingReportData): Promise<Buffer> {
   const pdfDoc = await PDFDocument.create();
+  pdfDoc.registerFontkit(fontkit);
   
   // A4 portrait: 595.28 width, 841.89 height
   const page = pdfDoc.addPage([595.28, 841.89]);
@@ -23,6 +37,32 @@ export async function generateScoutingReportPdf(data: ScoutingReportData): Promi
   const fontOblique = await pdfDoc.embedFont(StandardFonts.HelveticaOblique);
   const fontCourier = await pdfDoc.embedFont(StandardFonts.Courier);
   const fontCourierBold = await pdfDoc.embedFont(StandardFonts.CourierBold);
+
+  // Find or download Noto Sans Devanagari for rendering Hindi/Awadhi text
+  let devanagariFontBytes: Buffer | null = null;
+  const localFontPath = path.join(process.cwd(), 'public', 'NotoSansDevanagari-Regular.ttf');
+  
+  if (fs.existsSync(localFontPath)) {
+    devanagariFontBytes = fs.readFileSync(localFontPath);
+  } else {
+    try {
+      console.log("Downloading Noto Sans Devanagari font...");
+      const response = await fetch('https://github.com/google/fonts/raw/main/ofl/notosansdevanagari/NotoSansDevanagari-Regular.ttf');
+      if (response.ok) {
+        const arrayBuffer = await response.arrayBuffer();
+        devanagariFontBytes = Buffer.from(arrayBuffer);
+        fs.writeFileSync(localFontPath, devanagariFontBytes);
+        console.log("Devanagari font downloaded and saved locally.");
+      }
+    } catch (err) {
+      console.error("Failed to download Devanagari font:", err);
+    }
+  }
+
+  // Embed the font if available
+  const fontDevanagari = devanagariFontBytes 
+    ? await pdfDoc.embedFont(devanagariFontBytes) 
+    : fontRegular; // Fallback to Helvetica
 
   const finalGrade = data.agentOutput?.evaluation?.mechanical_grade || data.numbersOnlyOutput?.evaluation?.mechanical_grade || "C";
   const matchPercent = data.engineAnalysis?.match_percentage ?? 80;
@@ -265,11 +305,11 @@ export async function generateScoutingReportPdf(data: ScoutingReportData): Promi
   page.drawText('Coaching Tip (Hindi):', { x: leftColX + 22, y: tipBoxY + 56, size: 7, font: fontBold, color: primaryColor });
   
   const rawTipHindi = data.numbersOnlyOutput?.vernacular_feedback?.coaching_tips_hindi || "No tip available.";
-  page.drawText(cleanText(rawTipHindi), {
+  page.drawText(cleanVernacularText(rawTipHindi), {
     x: leftColX + 22,
     y: tipBoxY + 44,
     size: 7,
-    font: fontOblique,
+    font: fontDevanagari,
     color: textColor,
     maxWidth: colWidth - 44,
     lineHeight: 9
@@ -415,11 +455,11 @@ export async function generateScoutingReportPdf(data: ScoutingReportData): Promi
   page.drawText('Contextual Tip (Awadhi):', { x: rightColX + 22, y: rightTipBoxY + 56, size: 7, font: fontBold, color: primaryColor });
   
   const visionTipAwadhi = data.agentOutput?.vernacular_feedback?.coaching_tips_awadhi || "No tip available.";
-  page.drawText(cleanText(visionTipAwadhi), {
+  page.drawText(cleanVernacularText(visionTipAwadhi), {
     x: rightColX + 22,
     y: rightTipBoxY + 44,
     size: 7,
-    font: fontOblique,
+    font: fontDevanagari,
     color: primaryColor,
     maxWidth: colWidth - 44,
     lineHeight: 9
