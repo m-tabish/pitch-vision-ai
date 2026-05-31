@@ -27,7 +27,7 @@ Lucknow has an incredible amount of raw cricket talent, but the path from street
 *   **Styling:** Tailwind CSS + `shadcn/ui` + Lucide Icons
 *   **Computer Vision:** Google MediaPipe Pose (`@mediapipe/tasks-vision`) - Runs entirely client-side.
 *   **AI Orchestration:** Vercel AI SDK
-*   **LLM:** Google Gemini 1.5 Pro
+*   **LLM:** Google Gemini 2.5 Flash
 *   **Deployment:** Vercel
 
 ---
