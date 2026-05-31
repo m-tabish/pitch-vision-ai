@@ -947,8 +947,38 @@ _Analyzed via PitchVision AI Core._`;
 
         {/* FULL-WIDTH SCRIBING/REPORTING BLOCK */}
         <div className="lg:col-span-12 w-full mt-4">
-          {/* EVALUATION DOSSIER */}
-          {agentOutput ? (
+          {isAnalyzing ? (
+            <div className="rounded-2xl border border-emerald-500/30 bg-zinc-900/20 backdrop-blur-sm p-12 text-center flex flex-col items-center justify-center min-h-[350px] text-zinc-400 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-500/5 to-transparent animate-pulse pointer-events-none"></div>
+              
+              <div className="relative w-16 h-16 mb-6">
+                <div className="absolute inset-0 rounded-full border-4 border-emerald-500/10"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-t-emerald-500 border-r-emerald-500 animate-spin"></div>
+                <Cpu className="absolute inset-0 m-auto w-6 h-6 text-emerald-400 animate-pulse" />
+              </div>
+
+              <h3 className="text-base font-semibold text-white mb-2 tracking-tight">AI Orchestration Engine Active</h3>
+              <p className="text-xs text-zinc-500 max-w-md mb-6 leading-relaxed">
+                Analyzing biomechanical coordinates, executing multi-agent evaluation workflow, and compiling Vernacular Awadhi & Hindi coaching advice.
+              </p>
+
+              {/* Progress step indicators */}
+              <div className="w-full max-w-xs space-y-2 text-left bg-zinc-950/50 p-4 rounded-xl border border-zinc-800/80">
+                <div className="flex items-center gap-2 text-xs text-zinc-300">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                  <span>Pose estimation coordinates locked.</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-zinc-450">
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-500" />
+                  <span>Generating professional scouting reports...</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-zinc-500">
+                  <span className="w-1.5 h-1.5 rounded-full bg-zinc-800"></span>
+                  <span>Drafting regional Awadhi/Hindi feedback tip.</span>
+                </div>
+              </div>
+            </div>
+          ) : agentOutput ? (
             <div className="rounded-2xl border border-zinc-800/80 bg-zinc-900/35 overflow-hidden flex flex-col gap-6 p-5 relative">
               
               {/* Dossier Header */}
