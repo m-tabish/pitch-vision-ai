@@ -811,6 +811,15 @@ _Analyzed via PitchVision AI Core._`;
               <p>For the best analysis, ask the player to capture from a side-on or direct front profile. To evaluate fast bowlers, pause right at the **release keyframe**. For batsmen, pause at the **impact keyframe**.</p>
             </div>
           </div>
+
+          {/* Reference Image / Calibration Diagram in the Gap */}
+          <div className="rounded-2xl border border-zinc-800/60 bg-zinc-950/40 p-1.5 overflow-hidden flex items-center justify-center shadow-lg">
+            <img 
+              src="/images/2.png" 
+              alt="Biomechanical Reference" 
+              className="w-full h-auto object-contain rounded-xl opacity-80 hover:opacity-100 transition-opacity duration-300"
+            />
+          </div>
         </section>
 
         {/* RIGHT COLUMN: Console & Scout Dossier (Lg: 5 cols) */}

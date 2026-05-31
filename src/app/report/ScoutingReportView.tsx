@@ -101,21 +101,21 @@ export default function ScoutingReportView({ data }: ScoutingReportViewProps) {
       {/* 2. Numbers Block */}
       <section className="mb-4">
         <h3 className="text-sm font-bold text-zinc-900 uppercase tracking-wider mb-3 border-b border-zinc-250 pb-2">Biomechanical Telemetry</h3>
-        <div className="overflow-hidden rounded-none border border-zinc-200">
-          <table className="w-full text-sm text-left">
-            <thead className="bg-zinc-50 text-xs uppercase text-zinc-500 font-bold border-b border-zinc-200">
+        <div className="overflow-hidden rounded-none border border-zinc-200" style={{ backgroundColor: '#ffffff' }}>
+          <table className="w-full text-sm text-left border-collapse" style={{ backgroundColor: '#ffffff', color: '#1f2937' }}>
+            <thead className="bg-zinc-50 text-xs uppercase text-zinc-500 font-bold border-b border-zinc-200" style={{ backgroundColor: '#f9fafb', color: '#4b5563' }}>
               <tr>
-                <th className="px-4 py-3">Parameter</th>
-                <th className="px-4 py-3">Actual Value</th>
-                <th className="px-4 py-3">Standard Expected</th>
+                <th className="px-4 py-3" style={{ backgroundColor: '#f9fafb', color: '#4b5563' }}>Parameter</th>
+                <th className="px-4 py-3" style={{ backgroundColor: '#f9fafb', color: '#4b5563' }}>Actual Value</th>
+                <th className="px-4 py-3" style={{ backgroundColor: '#f9fafb', color: '#4b5563' }}>Standard Expected</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-200">
+            <tbody className="divide-y divide-zinc-200" style={{ backgroundColor: '#ffffff' }}>
               {metrics.map((m, idx) => (
-                <tr key={idx} className="bg-white">
-                  <td className="px-4 py-3 font-semibold text-zinc-650">{m.name}</td>
-                  <td className="px-4 py-3 font-mono font-bold text-[#FF6B00]">{m.actual !== undefined ? m.actual + '°' : 'N/A'}</td>
-                  <td className="px-4 py-3 font-mono text-zinc-550">{m.standard}</td>
+                <tr key={idx} className="bg-white" style={{ backgroundColor: '#ffffff' }}>
+                  <td className="px-4 py-3 font-semibold text-zinc-700" style={{ backgroundColor: '#ffffff', color: '#374151' }}>{m.name}</td>
+                  <td className="px-4 py-3 font-mono font-bold text-[#FF6B00]" style={{ backgroundColor: '#ffffff', color: '#FF6B00' }}>{m.actual !== undefined ? m.actual + '°' : 'N/A'}</td>
+                  <td className="px-4 py-3 font-mono text-zinc-500" style={{ backgroundColor: '#ffffff', color: '#6b7280' }}>{m.standard}</td>
                 </tr>
               ))}
             </tbody>
