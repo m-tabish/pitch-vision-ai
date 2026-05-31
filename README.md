@@ -7,9 +7,16 @@
 ---
 
 ## 📖 Project Overview
-**PitchVision AI** is an AI-powered biomechanical analysis platform designed for grassroots cricket scouting. By using client-side computer vision and the Gemini 1.5 Pro LLM, it helps young players in local maidans (like those in Lucknow) get professional-grade coaching feedback and standardized scouting dossiers using just a smartphone camera.
+**PitchVision AI** is an AI-powered biomechanical analysis platform designed for grassroots cricket scouting. By using client-side computer vision and the Gemini 1.5 Pro/Flash LLM, it helps young players in local maidans (like those in Lucknow) get professional-grade coaching feedback and standardized scouting dossiers using just a smartphone camera.
 
 **Demo Video Link:** [Watch here](https://drive.google.com/file/d/1QOCxON-JBW9EkeQ2OZ3K_8KHbZujddyb/view?usp=sharing)
+
+### 🌟 Recent Features & Additions
+*   **Three-Tier Biomechanical Grading System:** Implemented a robust evaluation system aligning with professional sports science benchmarks (Grade A: Elite, Grade B: Developing, Grade C: Needs Work).
+*   **Standard Reference Calibration:** The user interface and exported reports now show standardized target benchmarks directly alongside recorded angles (e.g. elbow flexion, front knee bracing) for real-time compliance checking.
+*   **Visual Rebranding (Orange Theme):** Remade the entire UI and reporting layout with a premium, state-of-the-art orange branding palette (`#FF6B00`).
+*   **Live Webcam Biomechanical Tracking:** Active webcam tracking overlay renders real-time MediaPipe joint angles and skeletal outlines directly in the browser.
+*   **Unicode PDF Rendering Support:** Integrated `@pdf-lib/fontkit` with a dynamically loaded/cached Noto Sans Devanagari font to enable error-free rendering of Hindi and Awadhi vernacular coaching tips inside the generated PDF dossier.
 
 ---
 
@@ -22,12 +29,13 @@ Lucknow has an incredible amount of raw cricket talent, but the path from street
 ---
 
 ## 🛠️ Tech Stack & Tools
-*   **Framework:** Next.js 14/15 (App Router)
+*   **Framework:** Next.js 16 (App Router)
 *   **Language:** TypeScript
-*   **Styling:** Tailwind CSS + `shadcn/ui` + Lucide Icons
+*   **Styling:** Tailwind CSS + Vanilla CSS (globals.css) + Lucide Icons
 *   **Computer Vision:** Google MediaPipe Pose (`@mediapipe/tasks-vision`) - Runs entirely client-side.
+*   **PDF Generation:** `pdf-lib` + `@pdf-lib/fontkit` (with dynamic Devanagari glyph embedding)
 *   **AI Orchestration:** Vercel AI SDK
-*   **LLM:** Google Gemini 2.5 Flash
+*   **LLM:** Google Gemini 2.5 Flash / Gemini 1.5 Pro
 *   **Deployment:** Vercel
 
 ---
@@ -64,5 +72,4 @@ Lucknow has an incredible amount of raw cricket talent, but the path from street
 ## ⚠️ Known Limitations & Incomplete Features
 *   **Single-Player Focus:** The current vision engine works best when only one player is in the frame.
 *   **Camera Angle Sensitivity:** Math calculations are most accurate from direct side-on or front-on profiles; extreme diagonal angles may skew joint results.
-*   **Vernacular Agent:** Currently disabled in the simplified refactor to focus on technical biomechanical accuracy; local dialect coaching tips are planned for the next release.
-*   **Historical Tracking:** Currently, analysis is per-frame; a database for tracking a player's progress over time is yet to be implemented.
+*   **Historical Tracking:** Currently, analysis is per-session/per-frame; a database for tracking a player's progress over time is yet to be implemented.
