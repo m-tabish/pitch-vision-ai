@@ -38,15 +38,15 @@ export default function ScoutingReportView({ data }: ScoutingReportViewProps) {
     if (discipline === "Fast Bowling") {
       return [
         { name: "Bowling Arm Elbow Flexion", actual: calculatedBiometrics?.bowling_arm_elbow_angle, standard: "< 15° (ICC Limit)" },
-        { name: "Front Knee Bracing Angle", actual: calculatedBiometrics?.front_knee_bracing_angle, standard: "160° - 180°" },
-        { name: "Torso Lateral Flexion", actual: calculatedBiometrics?.torso_lateral_flexion_angle, standard: "20° - 30°" }
+        { name: "Front Knee Bracing Angle", actual: calculatedBiometrics?.front_knee_bracing_angle, standard: "160° - 180° (Elite)" },
+        { name: "Torso Lateral Flexion", actual: calculatedBiometrics?.torso_lateral_flexion_angle, standard: "20° - 30° (Elite)" }
       ];
     } else {
       return [
         { name: "Leading Elbow Angle", actual: calculatedBiometrics?.leading_elbow_angle, standard: "95° - 115° (Elite)" },
-        { name: "Front Knee Stride Flex", actual: calculatedBiometrics?.front_knee_flex_angle, standard: "110° - 135° (Elite)" },
-        { name: "Back Hip Extension", actual: calculatedBiometrics?.back_hip_angle, standard: "165° - 180° (Elite)" },
-        { name: "Head/Shoulder Alignment", actual: calculatedBiometrics?.head_alignment, standard: "< 0.15 deviation" }
+        { name: "Front Knee Stride Flex", actual: calculatedBiometrics?.front_knee_flex_angle, standard: "110° - 130° (Elite)" },
+        { name: "Back Hip Extension", actual: calculatedBiometrics?.back_hip_angle, standard: "160° - 180° (Elite)" },
+        { name: "Head/Shoulder Alignment", actual: calculatedBiometrics?.head_alignment, standard: "< 0.15 deviation (Elite)" }
       ];
     }
   };

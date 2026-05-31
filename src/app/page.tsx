@@ -327,10 +327,12 @@ export default function Home() {
         // Cover Drive
         const armNodes = hand === "right" ? [11, 13, 15] : [12, 14, 16];
         const frontLegNodes = hand === "right" ? [23, 25, 27] : [24, 26, 28];
+        const backHipNodes = hand === "right" ? [12, 24, 26] : [11, 23, 25];
         const headNode = 0; // Nose
 
         const elbow = calculateAngle3D(landmarks[armNodes[0]], landmarks[armNodes[1]], landmarks[armNodes[2]]);
         const knee = calculateAngle3D(landmarks[frontLegNodes[0]], landmarks[frontLegNodes[1]], landmarks[frontLegNodes[2]]);
+        const hip = calculateAngle3D(landmarks[backHipNodes[0]], landmarks[backHipNodes[1]], landmarks[backHipNodes[2]]);
 
         // Head horizontal stability relative to front knee
         const noseX = landmarks[headNode].x;
@@ -338,28 +340,47 @@ export default function Home() {
         const headAlignment = Math.abs(noseX - kneeX);
         const headStability = headAlignment > 0.15 ? "Falling Off (Off-balance)" : "Balanced";
 
-        let elbowQuality = "Optimal High Elbow";
-        if (elbow > 110.0) elbowQuality = "Elbow Too Low (Uncontrolled)";
-        else if (elbow < 60.0) elbowQuality = "Elbow Over-bent (Cramped)";
+        // Three-tier grading for Lead Elbow
+        let elbowQuality = "Optimal High Elbow (Elite)";
+        if (elbow < 75.0 || elbow > 130.0) {
+          elbowQuality = "Elbow Too Low/Cramped (Needs Work)";
+        } else if ((elbow >= 75.0 && elbow < 95.0) || (elbow > 115.0 && elbow <= 130.0)) {
+          elbowQuality = "Elbow Slightly Dropped (Developing)";
+        }
 
-        let kneeFlex = "Optimal Weight Transfer";
-        if (knee > 145.0) kneeFlex = "Knee Stiff (Weight Back)";
-        else if (knee < 110.0) kneeFlex = "Knee Over-bent (Over-committed)";
+        // Three-tier grading for Front Knee Flexion
+        let kneeFlex = "Optimal Weight Transfer (Elite)";
+        if (knee < 100.0 || knee > 150.0) {
+          kneeFlex = "Stiff Knee / Poor Transfer (Needs Work)";
+        } else if ((knee >= 100.0 && knee < 110.0) || (knee > 130.0 && knee <= 150.0)) {
+          kneeFlex = "Knee Slightly Stiff (Developing)";
+        }
 
-        // Recalibrated: wider optimal elbow window for batting
-        const elbowMatch = elbow < 65.0 ? Math.max(0, 100 - (65 - elbow) * 2) : (elbow > 100.0 ? Math.max(0, 100 - (elbow - 100) * 2) : 100);
-        const kneeMatch = knee < 115.0 ? Math.max(0, 100 - (115 - knee) * 2.5) : (knee > 145.0 ? Math.max(0, 100 - (knee - 145) * 2.5) : 100);
-        const matchPercentage = elbowMatch * 0.5 + kneeMatch * 0.5;
+        // Three-tier grading for Back Hip Extension
+        let hipExtension = "Full Hip Extension (Elite)";
+        if (hip < 150.0) {
+          hipExtension = "Restricted Hip Extension (Needs Work)";
+        } else if (hip >= 150.0 && hip < 160.0) {
+          hipExtension = "Partial Hip Extension (Developing)";
+        }
+
+        // Calculate matching percentages based on statistical significance in research
+        const elbowMatch = elbow >= 95.0 && elbow <= 115.0 ? 100 : (elbow < 95.0 ? Math.max(0, 100 - (95.0 - elbow) * 2.5) : Math.max(0, 100 - (elbow - 115.0) * 2.5));
+        const kneeMatch = knee >= 110.0 && knee <= 130.0 ? 100 : (knee < 110.0 ? Math.max(0, 100 - (110.0 - knee) * 3.5) : Math.max(0, 100 - (knee - 130.0) * 2.5));
+        const hipMatch = hip >= 160.0 && hip <= 180.0 ? 100 : Math.max(0, 100 - (160.0 - hip) * 2.5);
+        const matchPercentage = elbowMatch * 0.4 + kneeMatch * 0.3 + hipMatch * 0.3;
 
         return {
           biometrics: {
             leading_elbow_angle: Number(elbow.toFixed(1)),
             front_knee_flex_angle: Number(knee.toFixed(1)),
+            back_hip_angle: Number(hip.toFixed(1)),
             head_alignment: Number(headAlignment.toFixed(2))
           },
           analysis: {
             leading_elbow_quality: elbowQuality,
             knee_flexion_quality: kneeFlex,
+            back_hip_extension_quality: hipExtension,
             head_stability_status: headStability,
             match_percentage: Number(matchPercentage.toFixed(1))
           }
@@ -490,11 +511,11 @@ export default function Home() {
       await delay(900);
       addLog(`🛡️ Compliance: Chucking action flex verified: ${analysis.chucking_risk}.`, "Evaluation", analysis.chucking_risk.includes("High") ? "error" : "success");
     } else {
-      addLog(`📐 Telemetry: Leading Elbow computed at ${biometrics.leading_elbow_angle}°. Front Knee Flexion at ${biometrics.front_knee_flex_angle}°.`, "Telemetry", "success");
+      addLog(`📐 Telemetry: Lead Elbow at ${biometrics.leading_elbow_angle}°. Front Knee at ${biometrics.front_knee_flex_angle}°. Back Hip at ${biometrics.back_hip_angle}°.`, "Telemetry", "success");
       await delay(800);
       addLog(`🧠 Evaluation Agent: Biomechanical deviation assessment computed. Stance Match: ${analysis.match_percentage}%.`, "Evaluation", "processing");
       await delay(900);
-      addLog(`🛡️ Compliance: Head position stability verified: ${analysis.head_stability_status}.`, "Evaluation", "success");
+      addLog(`🛡️ Compliance: Back hip extension graded: ${analysis.back_hip_extension_quality}. Head stability: ${analysis.head_stability_status}.`, "Evaluation", "success");
     }
 
     await delay(700);
@@ -1317,10 +1338,10 @@ export default function Home() {
                 <h4 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Joint Telemetry</h4>
 
                 {discipline === "Fast Bowling" ? (
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     <div>
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-zinc-400 font-medium">Elbow Flexion</span>
+                        <span className="text-zinc-400 font-medium">Elbow Flexion (Standard: &lt; 15°)</span>
                         <span className="font-bold text-white font-mono">{calculatedBiometrics.bowling_arm_elbow_angle}°</span>
                       </div>
                       <div className="w-full h-1.5 bg-zinc-800 rounded-none overflow-hidden">
@@ -1329,19 +1350,30 @@ export default function Home() {
                     </div>
                     <div>
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-zinc-400 font-medium">Knee Brace Angle</span>
+                        <span className="text-zinc-400 font-medium">Knee Brace Angle (Standard: 160° - 180°)</span>
                         <span className="font-bold text-white font-mono">{calculatedBiometrics.front_knee_bracing_angle}°</span>
                       </div>
                       <div className="w-full h-1.5 bg-zinc-800 rounded-none overflow-hidden">
                         <div className="h-full bg-[#FF6B00]" style={{ width: Math.min(100, (calculatedBiometrics.front_knee_bracing_angle / 180) * 100) + "%" }}></div>
                       </div>
                     </div>
+                    {calculatedBiometrics.torso_lateral_flexion_angle !== undefined && (
+                      <div>
+                        <div className="flex justify-between text-xs mb-1">
+                          <span className="text-zinc-400 font-medium">Torso Lateral Flexion (Standard: 20° - 30°)</span>
+                          <span className="font-bold text-white font-mono">{calculatedBiometrics.torso_lateral_flexion_angle}°</span>
+                        </div>
+                        <div className="w-full h-1.5 bg-zinc-800 rounded-none overflow-hidden">
+                          <div className="h-full bg-[#FF6B00]" style={{ width: Math.min(100, (calculatedBiometrics.torso_lateral_flexion_angle / 180) * 100) + "%" }}></div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ) : (
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     <div>
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-zinc-400 font-medium">Elbow Angle</span>
+                        <span className="text-zinc-400 font-medium">Elbow Angle (Standard: 95° - 115°)</span>
                         <span className="font-bold text-white font-mono">{calculatedBiometrics.leading_elbow_angle}°</span>
                       </div>
                       <div className="w-full h-1.5 bg-zinc-800 rounded-none overflow-hidden">
@@ -1350,13 +1382,35 @@ export default function Home() {
                     </div>
                     <div>
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-zinc-400 font-medium">Knee Stride Flex</span>
+                        <span className="text-zinc-400 font-medium">Knee Stride Flex (Standard: 110° - 130°)</span>
                         <span className="font-bold text-white font-mono">{calculatedBiometrics.front_knee_flex_angle}°</span>
                       </div>
                       <div className="w-full h-1.5 bg-zinc-800 rounded-none overflow-hidden">
                         <div className="h-full bg-[#FF6B00]" style={{ width: Math.min(100, (calculatedBiometrics.front_knee_flex_angle / 180) * 100) + "%" }}></div>
                       </div>
                     </div>
+                    {calculatedBiometrics.back_hip_angle !== undefined && (
+                      <div>
+                        <div className="flex justify-between text-xs mb-1">
+                          <span className="text-zinc-400 font-medium">Back Hip Extension (Standard: 160° - 180°)</span>
+                          <span className="font-bold text-white font-mono">{calculatedBiometrics.back_hip_angle}°</span>
+                        </div>
+                        <div className="w-full h-1.5 bg-zinc-800 rounded-none overflow-hidden">
+                          <div className="h-full bg-[#FF6B00]" style={{ width: Math.min(100, (calculatedBiometrics.back_hip_angle / 180) * 100) + "%" }}></div>
+                        </div>
+                      </div>
+                    )}
+                    {calculatedBiometrics.head_alignment !== undefined && (
+                      <div>
+                        <div className="flex justify-between text-xs mb-1">
+                          <span className="text-zinc-400 font-medium">Head Deviation (Standard: &lt; 0.15)</span>
+                          <span className="font-bold text-white font-mono">{calculatedBiometrics.head_alignment}</span>
+                        </div>
+                        <div className="w-full h-1.5 bg-zinc-800 rounded-none overflow-hidden">
+                          <div className="h-full bg-[#FF6B00]" style={{ width: Math.min(100, (calculatedBiometrics.head_alignment / 0.5) * 100) + "%" }}></div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

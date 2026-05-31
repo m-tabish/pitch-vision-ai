@@ -58,11 +58,11 @@ Identify structural strengths and weaknesses, and flag any illegal bowling actio
 PROFESSIONAL BIOMECHANICAL BENCHMARKS (IJSDR2208101 RESEARCH):
 - Fast Bowling:
   * Bowling Arm Elbow flexion should be < 15° (ICC Limit).
-  * Front Knee bracing should be braced (160° - 180°).
+  * Front Knee bracing should be braced (160° - 180° (Elite)).
 - Front-Foot Cover Drive:
-  * Leading Elbow Angle at execution should be high and extended between 95° and 115° (Elite/Tier 1) for optimal swing control.
-  * Front Knee Stride Flex at placement/execution should lunge and bend between 110° and 135° (Elite/Tier 1) for low center of gravity and weight transfer.
-  * Back Hip Extension at execution should be extended between 165° and 180° (Elite/Tier 1) to indicate complete forward weight shift and rotation.
+  * Leading Elbow Angle at execution should be high and extended between 95° and 115° (Elite) for optimal swing control.
+  * Front Knee Stride Flex at placement/execution should lunge and bend between 110° and 130° (Elite) for low center of gravity and weight transfer.
+  * Back Hip Extension at execution should be extended between 160° and 180° (Elite) to indicate complete forward weight shift and rotation.
 
 CRITICAL INSTRUCTION: You MUST NOT invent your own numeric scores. The Bio-Engine Scoring math provided in the prompt is the absolute source of truth. Use the provided image ONLY to provide visual context (e.g., 'Due to camera occlusion...', or 'The image confirms...'). Do not let the image override the hard mathematical percentages.
 
