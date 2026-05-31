@@ -19,6 +19,7 @@ import {
   Video, 
   AlertCircle
 } from "lucide-react";
+import ScoutingReportView from "./report/ScoutingReportView";
 
 // Types for joint positions
 interface Landmark {
@@ -64,6 +65,7 @@ export default function Home() {
   const [agentOutput, setAgentOutput] = useState<any>(null);
   const [userEmail, setUserEmail] = useState("");
   const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [capturedFrame, setCapturedFrame] = useState<string | null>(null);
 
   // Terminal Console Logs State
   const [logs, setLogs] = useState<LogEntry[]>([]);
@@ -362,6 +364,25 @@ export default function Home() {
     setIsAnalyzing(true);
     addLog("🔒 Frame frozen. Extracting keyframe telemetry data...", "System", "info");
 
+    // Capture current frame as data URL
+    let frameDataUrl = null;
+    if (videoRef.current) {
+      try {
+        const video = videoRef.current;
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          frameDataUrl = canvas.toDataURL("image/jpeg", 0.7);
+        }
+      } catch (e) {
+        console.error("Frame capture failed:", e);
+      }
+    }
+    setCapturedFrame(frameDataUrl);
+
     // Clear previous results to animate fresh loader
     setCalculatedBiometrics(null);
     setEngineAnalysis(null);
@@ -483,8 +504,8 @@ _Analyzed via PitchVision AI Core._`;
     setIsSendingEmail(true);
     addLog("📧 Generating PDF and dispatching email via Resend...", "System", "info");
 
-    let frameDataUrl = null;
-    if (videoRef.current) {
+    let frameDataUrl = capturedFrame;
+    if (!frameDataUrl && videoRef.current) {
       try {
         const video = videoRef.current;
         const canvas = document.createElement("canvas");
@@ -888,94 +909,70 @@ _Analyzed via PitchVision AI Core._`;
 
           {/* EVALUATION DOSSIER */}
           {agentOutput ? (
-            <div className="rounded-2xl border border-zinc-800/80 bg-zinc-900/35 overflow-hidden flex flex-col gap-5 p-5 relative">
+            <div className="rounded-2xl border border-zinc-800/80 bg-zinc-900/35 overflow-hidden flex flex-col gap-6 p-5 relative">
               
-              {/* Header Badge */}
-              <div className="flex items-center justify-between border-b border-zinc-800/60 pb-4">
-                <div className="flex items-center gap-2">
-                  <Award className="w-5 h-5 text-emerald-400" />
-                  <div>
-                    <h4 className="text-xs font-bold text-white uppercase tracking-wider">Technical Evaluation</h4>
-                    <p className="text-[10px] text-zinc-500">ID: PV-LKO-{isMounted ? Math.floor(1000 + Math.random() * 9000) : "0000"}</p>
-                  </div>
+              {/* Dossier Header */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-zinc-800/60 pb-4 gap-4">
+                <div>
+                  <h4 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                    <Award className="w-5 h-5 text-emerald-400" />
+                    Dossier Report Preview
+                  </h4>
+                  <p className="text-[10px] text-zinc-500">Live preview of compiled biometric scouting dossier</p>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-zinc-400">Mechanical Grade:</span>
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-950/40 border border-emerald-800/40 text-emerald-400">
-                    {agentOutput.evaluation?.mechanical_grade || "B"}
-                  </span>
+                <div className="flex flex-wrap items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const reportData = {
+                        playerName,
+                        location,
+                        discipline,
+                        hand: hand === "right" ? "Right" : "Left",
+                        calculatedBiometrics,
+                        engineAnalysis,
+                        agentOutput,
+                        numbersOnlyOutput: agentOutput,
+                        capturedFrameUrl: capturedFrame,
+                        analysisTimestamp: new Date().toISOString()
+                      };
+                      sessionStorage.setItem("pitchVisionReportData", JSON.stringify(reportData));
+                      window.open("/report", "_blank");
+                    }}
+                    className="py-2.5 px-4 rounded-xl text-xs font-semibold bg-zinc-800 hover:bg-zinc-700 text-white flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    Print / Export
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleShareWhatsApp}
+                    className="py-2.5 px-4 rounded-xl text-xs font-semibold bg-emerald-500 hover:bg-emerald-400 text-black flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Share2 className="w-3.5 h-3.5" />
+                    Share WhatsApp
+                  </button>
                 </div>
-              </div>
-
-              {/* Technical Summary */}
-              <div className="bg-emerald-950/20 border border-emerald-800/20 rounded-xl p-4 space-y-2.5">
-                <div className="flex items-center gap-2">
-                  <Cpu className="w-4 h-4 text-emerald-400" />
-                  <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Analyst Summary</span>
-                </div>
-                <p className="text-xs text-zinc-300 leading-relaxed">
-                  {agentOutput.evaluation?.technical_summary}
-                </p>
-              </div>
-
-              {/* Technical Critique bullet points */}
-              <div className="space-y-3">
-                <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">Biomechanical Review</span>
-                
-                <div className="space-y-2">
-                  {agentOutput.evaluation?.strengths?.map((str: string, idx: number) => (
-                    <div key={idx} className="flex gap-2 text-xs text-zinc-300 items-start">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0 mt-1.5"></span>
-                      <span>{str}</span>
-                    </div>
-                  ))}
-                  {agentOutput.evaluation?.weaknesses?.map((weak: string, idx: number) => (
-                    <div key={idx} className="flex gap-2 text-xs text-zinc-400 items-start">
-                      <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0 mt-1.5"></span>
-                      <span>{weak}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Action buttons */}
-              <div className="flex gap-2 border-t border-zinc-850 pt-4">
-                <button
-                  type="button"
-                  onClick={() => window.print()}
-                  className="flex-1 py-2.5 rounded-xl text-xs font-semibold bg-zinc-800 hover:bg-zinc-700 text-white flex items-center justify-center gap-1.5 transition-colors"
-                >
-                  Print Report
-                </button>
-                <button
-                  type="button"
-                  onClick={handleShareWhatsApp}
-                  className="flex-1 py-2.5 rounded-xl text-xs font-semibold bg-emerald-500 hover:bg-emerald-400 text-black flex items-center justify-center gap-1.5 transition-colors"
-                >
-                  <Share2 className="w-3.5 h-3.5" />
-                  Share Report
-                </button>
               </div>
 
               {/* Email dispatch section */}
-              <div className="border-t border-zinc-850 pt-4 space-y-2">
+              <div className="bg-zinc-950/45 border border-zinc-800/70 p-4 rounded-xl space-y-3">
                 <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">
-                  Dispatch Email Dossier
+                  Secure Dispatch
                 </label>
                 <div className="flex gap-2">
                   <input
                     type="email"
                     value={userEmail}
                     onChange={(e) => setUserEmail(e.target.value)}
-                    placeholder="scout@upca.org.in"
-                    className="flex-1 bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 transition-colors"
+                    placeholder="Enter coach or scout's email..."
+                    className="flex-1 bg-zinc-950 border border-zinc-850 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 transition-colors"
                   />
                   <button
                     type="button"
                     onClick={handleEmailShare}
                     disabled={isSendingEmail || !userEmail}
-                    className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
+                    className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
                       isSendingEmail || !userEmail
                         ? "bg-zinc-800 text-zinc-500 cursor-not-allowed"
                         : "bg-white text-black hover:bg-zinc-200"
@@ -986,8 +983,28 @@ _Analyzed via PitchVision AI Core._`;
                     ) : (
                       <Mail className="w-3.5 h-3.5" />
                     )}
-                    {isSendingEmail ? "Sending..." : "Send"}
+                    {isSendingEmail ? "Sending..." : "Dispatch Email"}
                   </button>
+                </div>
+              </div>
+
+              {/* Document Preview Frame */}
+              <div className="w-full overflow-x-auto bg-[#050508] border border-zinc-850/80 p-6 rounded-2xl flex justify-center items-start">
+                <div className="origin-top scale-[0.8] md:scale-[0.9] lg:scale-[1.0] my-2">
+                  <ScoutingReportView
+                    data={{
+                      playerName,
+                      location,
+                      discipline,
+                      hand: hand === "right" ? "Right" : "Left",
+                      calculatedBiometrics,
+                      engineAnalysis,
+                      agentOutput,
+                      numbersOnlyOutput: agentOutput,
+                      capturedFrameUrl: capturedFrame,
+                      analysisTimestamp: new Date().toISOString()
+                    }}
+                  />
                 </div>
               </div>
 
