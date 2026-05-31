@@ -737,29 +737,28 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 2.7: Standalone Cinematic Visual Showcase (Pure Image, Full-Bleed, No Text, No Box Border) */}
-        <section className="relative z-20 w-full overflow-hidden bg-[#000000] border-y border-zinc-950">
-          <div className="w-full h-[50vh] sm:h-[60vh] lg:h-[70vh] relative overflow-hidden bg-black select-none pointer-events-none">
+        {/* COMBINED FEATURES & DOSSIER PREVIEW SECTION WITH CINEMATIC BACKDROP */}
+        <section className="relative z-20 w-full overflow-hidden border-t border-zinc-900/60 bg-black">
+          
+          {/* Shared Cinematic Visual Background Backdrop */}
+          <div className="absolute inset-0 z-0 select-none pointer-events-none">
             {/* Ambient scanning lines overlay */}
             <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_95%,rgba(255,255,255,0.03)_95%)] bg-[size:100%_8px] z-20 opacity-20" />
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20 z-10" />
 
-            {/* Seamless Cinematic Vignettes to dissolve boxed border feel */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black z-25" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black z-25" />
+            {/* Seamless Cinematic Vignettes to dissolve borders and make text readable */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black z-20" />
+            <div className="absolute inset-0 bg-radial-gradient from-transparent via-[#000000]/75 to-black z-20" />
 
-            {/* The primary graphic - styled with custom sports-science filters (high-tech cyan/blue tint) */}
             <img
               src="/images/cricket_hero_visual.png"
-              alt="Immersive Widescreen Cricket Biomechanical Telemetry"
-              className="w-full h-full object-cover opacity-80 filter brightness-[0.75] contrast-[1.3] saturate-[1.2] hue-rotate-[160deg] scale-105"
+              alt="Immersive Cricket Biomechanical Telemetry Backdrop"
+              className="w-full h-full object-cover opacity-35 filter brightness-[0.6] contrast-[1.2] saturate-[1.1] hue-rotate-[160deg]"
             />
           </div>
-        </section>
 
-        {/* FEATURES GRID SECTION */}
-        <section className="relative z-20 w-full bg-[#050508] border-t border-zinc-900/60 py-24 px-6 md:px-16">
-          <div className="max-w-6xl mx-auto space-y-16">
+          {/* Section 1: Features Grid Content */}
+          <div className="relative z-30 max-w-6xl mx-auto py-24 px-6 md:px-16 space-y-16">
             
             {/* Section Header */}
             <div className="text-center space-y-4 max-w-xl mx-auto">
@@ -776,7 +775,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               
               {/* Feature 1 */}
-              <div className="bg-black border border-zinc-900 p-8 space-y-4 hover:border-zinc-700 transition-colors">
+              <div className="bg-black/60 backdrop-blur-md border border-zinc-900/80 p-8 space-y-4 hover:border-zinc-700 transition-colors">
                 <div className="w-10 h-10 bg-[#FF6B00]/10 border border-[#FF6B00]/20 flex items-center justify-center text-[#FF6B00]">
                   <Activity className="w-5 h-5" />
                 </div>
@@ -787,7 +786,7 @@ export default function Home() {
               </div>
 
               {/* Feature 2 */}
-              <div className="bg-black border border-zinc-900 p-8 space-y-4 hover:border-zinc-700 transition-colors">
+              <div className="bg-black/60 backdrop-blur-md border border-zinc-900/80 p-8 space-y-4 hover:border-zinc-700 transition-colors">
                 <div className="w-10 h-10 bg-white/10 border border-white/20 flex items-center justify-center text-white">
                   <Cpu className="w-5 h-5" />
                 </div>
@@ -798,7 +797,7 @@ export default function Home() {
               </div>
 
               {/* Feature 3 */}
-              <div className="bg-black border border-zinc-900 p-8 space-y-4 hover:border-zinc-700 transition-colors">
+              <div className="bg-black/60 backdrop-blur-md border border-zinc-900/80 p-8 space-y-4 hover:border-zinc-700 transition-colors">
                 <div className="w-10 h-10 bg-[#742fe5]/10 border border-[#742fe5]/20 flex items-center justify-center text-[#742fe5]">
                   <Award className="w-5 h-5" />
                 </div>
@@ -809,7 +808,7 @@ export default function Home() {
               </div>
 
               {/* Feature 4 */}
-              <div className="bg-black border border-zinc-900 p-8 space-y-4 hover:border-zinc-700 transition-colors">
+              <div className="bg-black/60 backdrop-blur-md border border-zinc-900/80 p-8 space-y-4 hover:border-zinc-700 transition-colors">
                 <div className="w-10 h-10 bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
                   <Share2 className="w-5 h-5" />
                 </div>
@@ -822,11 +821,9 @@ export default function Home() {
             </div>
 
           </div>
-        </section>
 
-        {/* SCOUTING DOSSIER PDF PREVIEW SECTION */}
-        <section className="relative z-20 w-full bg-[#000000] border-t border-zinc-900/60 py-24 px-6 md:px-16">
-          <div className="max-w-6xl mx-auto space-y-12">
+          {/* Section 2: Dossier Preview Content */}
+          <div className="relative z-30 max-w-6xl mx-auto pb-24 px-6 md:px-16 space-y-12">
             <div className="text-center space-y-4 max-w-xl mx-auto">
               <div className="inline-block text-[10px] font-black tracking-widest text-[#FF6B00] bg-[#FF6B00]/10 px-2.5 py-0.5 border border-[#FF6B00]/20 uppercase">
                 Live Document Sample
@@ -837,7 +834,7 @@ export default function Home() {
               </p>
             </div>
             
-            <div className="bg-[#050508] border border-zinc-900 rounded-none p-2 shadow-2xl relative overflow-hidden">
+            <div className="bg-[#050508]/80 backdrop-blur-md border border-zinc-900 rounded-none p-2 shadow-2xl relative overflow-hidden">
               <div className="absolute top-4 right-4 z-30">
                 <a 
                   href="/report" 
@@ -847,7 +844,7 @@ export default function Home() {
                   Open Report in New Tab ↗
                 </a>
               </div>
-              <div className="overflow-y-auto h-[650px] scrollbar-thin bg-black/60 p-4 flex justify-center">
+              <div className="overflow-y-auto h-[650px] scrollbar-thin bg-black/40 p-4 flex justify-center">
                 <iframe 
                   src="/report" 
                   className="w-[215mm] h-[297mm] border border-zinc-800 scale-90 sm:scale-100 origin-top shadow-xl"
@@ -856,7 +853,9 @@ export default function Home() {
               </div>
             </div>
           </div>
+
         </section>
+
 
         {/* Footer */}
         <footer className="relative z-20 border-t border-zinc-950 py-10 px-6 flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] text-zinc-500 uppercase tracking-widest bg-[#000000]/60 w-full">
