@@ -193,8 +193,8 @@ export default function Home() {
         const pt = scalePt(lm);
         ctx.beginPath();
         ctx.arc(pt.x, pt.y, 4, 0, 2 * Math.PI);
-        ctx.fillStyle = "#742fe5"; // Indigo Modern Violet
-        ctx.shadowColor = "#742fe5";
+        ctx.fillStyle = "#FF6B00"; // Orange
+        ctx.shadowColor = "#FF6B00";
         ctx.shadowBlur = 6;
         ctx.fill();
         ctx.shadowBlur = 0; // Reset blur
@@ -208,7 +208,7 @@ export default function Home() {
       [23, 25], [25, 27], [24, 26], [26, 28]              // Legs
     ];
 
-    ctx.strokeStyle = "rgba(74, 75, 215, 0.8)"; // Indigo Modern Indigo
+    ctx.strokeStyle = "rgba(255, 107, 0, 0.8)"; // Orange
     ctx.lineWidth = 2.5;
 
     connections.forEach(([p1, p2]) => {
@@ -228,7 +228,7 @@ export default function Home() {
     if (landmarksRef.current) {
       const lms = landmarksRef.current;
       ctx.font = "bold 14px monospace";
-      ctx.fillStyle = "#742fe5"; // Violet for style
+      ctx.fillStyle = "#FF6B00"; // Orange
       ctx.shadowBlur = 4;
       ctx.shadowColor = "white"; // White background glow for visibility on dark video
 
@@ -819,7 +819,7 @@ export default function Home() {
 
               {/* Feature 3 */}
               <div className="bg-black/60 backdrop-blur-md border border-zinc-900/80 p-8 space-y-4 hover:border-zinc-700 transition-colors">
-                <div className="w-10 h-10 bg-[#742fe5]/10 border border-[#742fe5]/20 flex items-center justify-center text-[#742fe5]">
+                <div className="w-10 h-10 bg-[#FF6B00]/10 border border-[#FF6B00]/20 flex items-center justify-center text-[#FF6B00]">
                   <Award className="w-5 h-5" />
                 </div>
                 <h4 className="text-lg font-bold text-white uppercase tracking-wider">Biomechanical Telemetry</h4>
@@ -1048,9 +1048,9 @@ export default function Home() {
                     {/* Option 2: Live Webcam Tracking */}
                     <div
                       onClick={handleStartWebcam}
-                      className="flex-1 flex flex-col items-center justify-center p-6 text-center cursor-pointer border border-dashed border-zinc-800 hover:border-[#742fe5] transition-all hover:bg-zinc-950/40 rounded-none group"
+                      className="flex-1 flex flex-col items-center justify-center p-6 text-center cursor-pointer border border-dashed border-zinc-800 hover:border-[#FF6B00] transition-all hover:bg-zinc-950/40 rounded-none group"
                     >
-                      <div className="w-14 h-14 rounded-none bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[#742fe5] group-hover:scale-105 transition-all mb-4">
+                      <div className="w-14 h-14 rounded-none bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[#FF6B00] group-hover:scale-105 transition-all mb-4">
                         <Camera className="w-7 h-7 animate-pulse" />
                       </div>
                       <h3 className="text-sm font-bold text-white mb-1">Live Webcam Tracking</h3>

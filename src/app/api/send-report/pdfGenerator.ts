@@ -28,10 +28,10 @@ export async function generateScoutingReportPdf(data: ScoutingReportData): Promi
   const matchPercent = data.engineAnalysis?.match_percentage ?? 80;
 
   // Colors
-  const primaryColor = rgb(74/255, 75/255, 215/255); // #4a4bd7 (Brand Violet)
+  const primaryColor = rgb(255/255, 107/255, 0/255); // #FF6B00 (Brand Orange)
   const textColor = rgb(44/255, 49/255, 73/255); // #2c3149 (Dark text)
   const grayColor = rgb(89/255, 94/255, 120/255); // #595e78
-  const lightBgColor = rgb(243/255, 242/255, 255/255); // #f3f2ff
+  const lightBgColor = rgb(255/255, 243/255, 235/255); // #fff3eb (Brand Light Orange Bg)
   const borderColor = rgb(226/255, 232/255, 240/255); // #e2e8f0
   
   // Dynamic grade colors
@@ -94,7 +94,7 @@ export async function generateScoutingReportPdf(data: ScoutingReportData): Promi
     borderWidth: 1
   });
 
-  page.drawText('PLAYER PROFILE', { x: 55, y: profileY + 36, size: 7.5, font: fontBold, color: rgb(116/255, 47/255, 229/255) });
+  page.drawText('PLAYER PROFILE', { x: 55, y: profileY + 36, size: 7.5, font: fontBold, color: primaryColor });
   page.drawText(cleanText(data.playerName), { x: 55, y: profileY + 14, size: 14, font: fontBold, color: textColor });
 
   // Grid details on the right inside profile block
@@ -174,7 +174,7 @@ export async function generateScoutingReportPdf(data: ScoutingReportData): Promi
     y: colY,
     width: colWidth,
     height: colHeight,
-    color: rgb(251/255, 248/255, 255/255)
+    color: rgb(250/255, 250/255, 250/255)
   });
 
   page.drawRectangle({
@@ -408,8 +408,8 @@ export async function generateScoutingReportPdf(data: ScoutingReportData): Promi
     y: rightTipBoxY,
     width: colWidth - 30,
     height: 70,
-    color: rgb(243/255, 242/255, 255/255), // light purple highlight
-    borderColor: rgb(221/255, 214/255, 254/255),
+    color: rgb(255/255, 243/255, 235/255), // light orange highlight
+    borderColor: rgb(254/255, 215/255, 170/255),
     borderWidth: 0.5
   });
   page.drawText('Contextual Tip (Awadhi):', { x: rightColX + 22, y: rightTipBoxY + 56, size: 7, font: fontBold, color: primaryColor });

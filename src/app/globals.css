@@ -13,8 +13,8 @@
   --color-surface-container-high: #1a1a1e;
   --color-surface-container-highest: #27272a;
   
-  --color-primary: #4a4bd7;
-  --color-primary-hover: #3d3dcb;
+  --color-primary: #FF6B00;
+  --color-primary-hover: #E05E00;
   --color-on-primary: #ffffff;
   
   --color-secondary: #a1a1aa; /* Secondary Text Zinc 400 */
@@ -146,8 +146,8 @@ input[type="email"]::placeholder {
 
 input[type="text"]:focus,
 input[type="email"]:focus {
-  border-color: #4a4bd7 !important;
-  box-shadow: 0 0 0 2px rgba(74, 75, 215, 0.25) !important;
+  border-color: #FF6B00 !important;
+  box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.25) !important;
 }
 
 /* Swap Clip / Stop Camera / Toggle Action Buttons */
@@ -162,13 +162,13 @@ input[type="email"]:focus {
   color: #ffffff !important;
 }
 
-.bg-\[\#f3f2ff\].text-\[\#4a4bd7\] {
+.bg-\[\#fff3eb\].text-\[\#FF6B00\] {
   background-color: #09090b !important;
   color: #ffffff !important;
   border: 1px solid #18181b !important;
 }
 
-.bg-\[\#f3f2ff\].text-\[\#4a4bd7\]:hover {
+.bg-\[\#fff3eb\].text-\[\#FF6B00\]:hover {
   background-color: #18181b !important;
   color: #ffffff !important;
 }
@@ -220,7 +220,7 @@ tbody tr:nth-child(even) {
 @media print {
   body > *:not(#print-report) { display: none !important; }
   #print-report { display: block !important; font-family: 'Plus Jakarta Sans', Arial, sans-serif; color: #2c3149; background: #fff; padding: 32px; max-width: 900px; margin: 0 auto; }
-  #print-report h1 { font-size: 22px; font-weight: 800; margin: 0 0 4px; color: #4a4bd7; }
+  #print-report h1 { font-size: 22px; font-weight: 800; margin: 0 0 4px; color: #FF6B00; }
   #print-report h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin: 20px 0 8px; border-bottom: 1px solid #ecedff; padding-bottom: 4px; color: #5c5e6e; }
   #print-report h3 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin: 12px 0 6px; color: #747995; }
   #print-report table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 12px; }
@@ -232,10 +232,10 @@ tbody tr:nth-child(even) {
   #print-report .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   #print-report .col-box { border: 1px solid #ecedff; border-radius: 8px; padding: 12px; }
   #print-report .col-box.numbers { border-color: #acb0ce; }
-  #print-report .col-box.vision { border-color: #4a4bd7; border-width: 2px; }
+  #print-report .col-box.vision { border-color: #FF6B00; border-width: 2px; }
   #print-report .col-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
   #print-report .col-label.numbers { color: #5c5e6e; }
-  #print-report .col-label.vision { color: #4a4bd7; }
+  #print-report .col-label.vision { color: #FF6B00; }
   #print-report ul { margin: 4px 0; padding-left: 16px; }
   #print-report li { font-size: 12px; margin: 3px 0; }
   #print-report .frame-img { max-width: 100%; border-radius: 8px; border: 1px solid #ecedff; margin-top: 8px; }

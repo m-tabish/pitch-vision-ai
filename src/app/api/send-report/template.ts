@@ -43,7 +43,7 @@ export function generateScoutingReportHtml(data: ScoutingReportData): string {
   const metricsHtml = metrics.map(m => `
     <tr>
       <td style="padding: 12px 10px; border-bottom: 1px solid #e2e8f0; font-weight: bold; color: #475569; font-size: 13px;">${m.label}</td>
-      <td style="padding: 12px 10px; border-bottom: 1px solid #e2e8f0; font-family: monospace; font-weight: bold; color: #4a4bd7; text-align: right; font-size: 13px;">${m.val !== undefined ? m.val + '°' : 'N/A'}</td>
+      <td style="padding: 12px 10px; border-bottom: 1px solid #e2e8f0; font-family: monospace; font-weight: bold; color: #FF6B00; text-align: right; font-size: 13px;">${m.val !== undefined ? m.val + '°' : 'N/A'}</td>
       <td style="padding: 12px 10px; border-bottom: 1px solid #e2e8f0; font-family: monospace; color: #64748b; text-align: right; font-size: 12px;">${m.limit}</td>
     </tr>
   `).join('');
@@ -58,12 +58,12 @@ export function generateScoutingReportHtml(data: ScoutingReportData): string {
         <style>
           body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f3f4f6; color: #1f2937; margin: 0; padding: 20px; }
           .container { max-width: 600px; background: #ffffff; border-radius: 12px; margin: 0 auto; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #e5e7eb; }
-          .header { background: #4a4bd7; color: #ffffff; padding: 30px 20px; text-align: center; }
+          .header { background: #FF6B00; color: #ffffff; padding: 30px 20px; text-align: center; }
           .header h1 { margin: 0; font-size: 24px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
           .header p { margin: 5px 0 0 0; font-size: 12px; font-weight: 600; opacity: 0.9; letter-spacing: 2px; text-transform: uppercase; }
           .content { padding: 25px 20px; }
-          .profile-box { background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 8px; padding: 15px 20px; margin-bottom: 25px; }
-          .profile-title { font-size: 9px; font-weight: bold; color: #7c3aed; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+          .profile-box { background: #fff3eb; border: 1px solid #fed7aa; border-radius: 8px; padding: 15px 20px; margin-bottom: 25px; }
+          .profile-title { font-size: 9px; font-weight: bold; color: #FF6B00; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
           .profile-name { margin: 0; color: #1f2937; font-size: 18px; font-weight: 800; }
           .profile-meta { font-size: 12px; color: #4b5563; }
           .grade-section { float: right; text-align: right; margin-top: -38px; }
@@ -71,9 +71,9 @@ export function generateScoutingReportHtml(data: ScoutingReportData): string {
           .grade-meta { font-size: 10px; color: #4b5563; font-weight: bold; margin-top: 3px; }
           .metrics-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; }
           .metrics-table th { background: #f8fafc; color: #475569; padding: 10px; text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0; }
-          .analysis-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 15px; border-left: 4px solid #4a4bd7; }
-          .analysis-card h4 { margin: 0 0 8px 0; font-size: 12px; text-transform: uppercase; color: #4a4bd7; letter-spacing: 0.5px; }
-          .coaching-tip { font-style: italic; background: #faf5ff; border-left: 3px solid #742fe5; padding: 10px 15px; margin: 12px 0 0 0; color: #581c87; font-size: 13px; border-radius: 0 4px 4px 0; }
+          .analysis-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 15px; border-left: 4px solid #FF6B00; }
+          .analysis-card h4 { margin: 0 0 8px 0; font-size: 12px; text-transform: uppercase; color: #FF6B00; letter-spacing: 0.5px; }
+          .coaching-tip { font-style: italic; background: #fff3eb; border-left: 3px solid #FF6B00; padding: 10px 15px; margin: 12px 0 0 0; color: #a16207; font-size: 13px; border-radius: 0 4px 4px 0; }
           .footer { background: #f9fafb; padding: 20px; border-top: 1px solid #e5e7eb; text-align: center; font-size: 11px; color: #6b7280; }
           .meta-footer { text-align: center; margin: 20px 0 10px 0; font-size: 11px; color: #6b7280; }
         </style>
@@ -127,7 +127,7 @@ export function generateScoutingReportHtml(data: ScoutingReportData): string {
             </div>
 
             ${data.numbersOnlyOutput?.vernacular_feedback?.coaching_tips_hindi ? `
-              <div class="analysis-card" style="border-left: 4px solid #742fe5;">
+              <div class="analysis-card" style="border-left: 4px solid #FF6B00;">
                 <h4>📣 Hindi Coaching Tip</h4>
                 <p style="font-size: 13px; font-style: italic; color: #4b5563; margin: 0;">
                   "${data.numbersOnlyOutput.vernacular_feedback.coaching_tips_hindi}"
