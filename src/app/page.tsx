@@ -757,6 +757,107 @@ export default function Home() {
           </div>
         </section>
 
+        {/* FEATURES GRID SECTION */}
+        <section className="relative z-20 w-full bg-[#050508] border-t border-zinc-900/60 py-24 px-6 md:px-16">
+          <div className="max-w-6xl mx-auto space-y-16">
+            
+            {/* Section Header */}
+            <div className="text-center space-y-4 max-w-xl mx-auto">
+              <div className="inline-block text-[10px] font-black tracking-widest text-[#FF6B00] bg-[#FF6B00]/10 px-2.5 py-0.5 border border-[#FF6B00]/20 uppercase">
+                System Capabilities
+              </div>
+              <h3 className="text-4xl font-black text-white uppercase tracking-tight">Core Features</h3>
+              <p className="text-xs text-zinc-400">
+                PlayVision AI integrates client-side vision computing with server-side LLM orchestrators to deliver scouting-grade feedback.
+              </p>
+            </div>
+
+            {/* Features 2x2 Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              
+              {/* Feature 1 */}
+              <div className="bg-black border border-zinc-900 p-8 space-y-4 hover:border-zinc-700 transition-colors">
+                <div className="w-10 h-10 bg-[#FF6B00]/10 border border-[#FF6B00]/20 flex items-center justify-center text-[#FF6B00]">
+                  <Activity className="w-5 h-5" />
+                </div>
+                <h4 className="text-lg font-bold text-white uppercase tracking-wider">Real-Time Joint Tracking</h4>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  Leverages MediaPipe client-side models to map 33 key physical joints. Calculates real-time 3D joint angle flexion at 30+ frames per second directly in-browser.
+                </p>
+              </div>
+
+              {/* Feature 2 */}
+              <div className="bg-black border border-zinc-900 p-8 space-y-4 hover:border-zinc-700 transition-colors">
+                <div className="w-10 h-10 bg-white/10 border border-white/20 flex items-center justify-center text-white">
+                  <Cpu className="w-5 h-5" />
+                </div>
+                <h4 className="text-lg font-bold text-white uppercase tracking-wider">Dual-Mode Agent Analysis</h4>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  Processes player trials through two parallel pipelines: a Numbers-Only biometric parser and a Vision-Enhanced multimodal model, detecting camera lens bias.
+                </p>
+              </div>
+
+              {/* Feature 3 */}
+              <div className="bg-black border border-zinc-900 p-8 space-y-4 hover:border-zinc-700 transition-colors">
+                <div className="w-10 h-10 bg-[#742fe5]/10 border border-[#742fe5]/20 flex items-center justify-center text-[#742fe5]">
+                  <Award className="w-5 h-5" />
+                </div>
+                <h4 className="text-lg font-bold text-white uppercase tracking-wider">Biomechanical Telemetry</h4>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  Validates bowling flexion and batting stride angles against sports science criteria. Computes accuracy percentages and grades stroke quality instantly.
+                </p>
+              </div>
+
+              {/* Feature 4 */}
+              <div className="bg-black border border-zinc-900 p-8 space-y-4 hover:border-zinc-700 transition-colors">
+                <div className="w-10 h-10 bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                  <Share2 className="w-5 h-5" />
+                </div>
+                <h4 className="text-lg font-bold text-white uppercase tracking-wider">Secure Dossier Dispatch</h4>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  Compiles a professional-grade A4 PDF layout of the trial with annotated frame screengrabs, ready for printing or instant SMTP delivery to coaches.
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+        {/* SCOUTING DOSSIER PDF PREVIEW SECTION */}
+        <section className="relative z-20 w-full bg-[#000000] border-t border-zinc-900/60 py-24 px-6 md:px-16">
+          <div className="max-w-6xl mx-auto space-y-12">
+            <div className="text-center space-y-4 max-w-xl mx-auto">
+              <div className="inline-block text-[10px] font-black tracking-widest text-[#FF6B00] bg-[#FF6B00]/10 px-2.5 py-0.5 border border-[#FF6B00]/20 uppercase">
+                Live Document Sample
+              </div>
+              <h3 className="text-4xl font-black text-white uppercase tracking-tight">Scouting Dossier PDF</h3>
+              <p className="text-xs text-zinc-400">
+                Review the generated, export-ready A4 PDF scouting report compiled by our dual-mode vision and telemetry agentic execution ledger.
+              </p>
+            </div>
+            
+            <div className="bg-[#050508] border border-zinc-900 rounded-none p-2 shadow-2xl relative overflow-hidden">
+              <div className="absolute top-4 right-4 z-30">
+                <a 
+                  href="/report" 
+                  target="_blank" 
+                  className="px-4 py-2 bg-white hover:bg-zinc-200 text-black font-extrabold text-[10px] tracking-widest uppercase transition-all shadow-md"
+                >
+                  Open Report in New Tab ↗
+                </a>
+              </div>
+              <div className="overflow-y-auto h-[650px] scrollbar-thin bg-black/60 p-4 flex justify-center">
+                <iframe 
+                  src="/report" 
+                  className="w-[215mm] h-[297mm] border border-zinc-800 scale-90 sm:scale-100 origin-top shadow-xl"
+                  style={{ height: '900px' }}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Footer */}
         <footer className="relative z-20 border-t border-zinc-950 py-10 px-6 flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] text-zinc-500 uppercase tracking-widest bg-[#000000]/60 w-full">
           <div className="flex flex-col gap-1.5 text-center md:text-left">

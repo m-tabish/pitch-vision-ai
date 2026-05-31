@@ -3,6 +3,61 @@
 import React, { useEffect, useState } from "react";
 import ScoutingReportView from "./ScoutingReportView";
 
+const MOCK_SAMPLE_DATA = {
+  playerName: "Virat Kohli",
+  location: "M. Chinnaswamy Stadium, Bengaluru",
+  discipline: "Cover Drive",
+  hand: "Right",
+  isImage: false,
+  analysisTimestamp: "31/05/2026, 6:00:00 PM",
+  calculatedBiometrics: {
+    leading_elbow_angle: 98.4,
+    front_knee_flex_angle: 124.6,
+    back_hip_angle: 172.5,
+    head_alignment: 0.08
+  },
+  engineAnalysis: {
+    elbow_flexion_quality: "Optimal High Elbow (Elite)",
+    knee_flexion_quality: "Optimal Weight Transfer (Elite)",
+    head_stability_status: "Balanced",
+    match_percentage: 95.5
+  },
+  numbersOnlyOutput: {
+    evaluation: {
+      mechanical_grade: "A",
+      technical_summary: "The batsman demonstrates exceptional mechanical form during the Cover Drive. The leading elbow remains high at 98.4 degrees, directing the flow of energy straight down the ground. Weight transfer is balanced, assisted by an optimal front knee flexion of 124.6 degrees. Head remains directly aligned over the knee, keeping the stance completely stable.",
+      strengths: [
+        "Optimal high leading elbow alignment maximizing swing efficiency.",
+        "Excellent front knee flexion allowing deep stride and control.",
+        "Nose/head position remains stable directly over target line."
+      ],
+      weaknesses: [
+        "Slight back foot heel lift could be grounded longer for extra base power."
+      ]
+    },
+    vernacular_feedback: {
+      coaching_tips_hindi: "कोहनी एकदम सही ऊंचाई पर है जिससे शॉट में नियंत्रण बना रहेगा। पैर का झुकाव भी सही है, बस अंतिम क्षण में सिर को गेंद के ठीक ऊपर रखें।"
+    }
+  },
+  agentOutput: {
+    evaluation: {
+      mechanical_grade: "A",
+      technical_summary: "Visual evaluation confirms an elite cover drive stroke. Head alignment is stable at 0.08 coordinate offset, showing zero head falling. The leading elbow shows an optimal high stance (98.4°), ensuring high-control bat flow. The front knee flexion at 124.6° allows full weight transfer over the ball.",
+      strengths: [
+        "High elbow keeps the bat face vertical, minimizing loft risk.",
+        "Head stability is absolute, keeping eyes level through contact."
+      ],
+      weaknesses: [
+        "Back hip is fully extended, though back foot could pivot slightly faster."
+      ]
+    },
+    vernacular_feedback: {
+      coaching_tips_hindi: "आपका कोहनी का कोण 98.4 डिग्री बहुत बढ़िया है। गेंद के पिच तक पहुँचने के लिए फ्रंट फुट का उपयोग उत्कृष्ट है। अभ्यास जारी रखें!"
+    }
+  },
+  capturedFrameUrl: "/images/cricket_feature_visual.png"
+};
+
 export default function ScoutingReportPage() {
   const [data, setData] = useState<any>(null);
   const [email, setEmail] = useState("");
@@ -68,7 +123,10 @@ export default function ScoutingReportPage() {
         setData(JSON.parse(storedData));
       } catch (e) {
         console.error("Failed to parse report data", e);
+        setData(MOCK_SAMPLE_DATA);
       }
+    } else {
+      setData(MOCK_SAMPLE_DATA);
     }
   }, []);
 
