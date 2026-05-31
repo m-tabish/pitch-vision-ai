@@ -1,26 +1,243 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000; /* Pure Black Luxury Theme Background */
+  --foreground: #f4f4f5; /* Zinc 100 white */
+
+  --color-surface: #050508; /* Premium Ultra-Dark Card Background */
+  --color-surface-dim: #030304;
+  --color-surface-bright: #09090b;
+  --color-surface-container-lowest: #000000;
+  --color-surface-container-low: #050508;
+  --color-surface-container: #121214;
+  --color-surface-container-high: #1a1a1e;
+  --color-surface-container-highest: #27272a;
+  
+  --color-primary: #4a4bd7;
+  --color-primary-hover: #3d3dcb;
+  --color-on-primary: #ffffff;
+  
+  --color-secondary: #a1a1aa; /* Secondary Text Zinc 400 */
+  --color-on-secondary: #000000;
+  
+  --color-tertiary: #742fe5;
+  --color-on-tertiary: #ffffff;
+  
+  --color-error: #ef4444;
+  
+  --font-sans: var(--font-plus-jakarta-sans);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  
+  --color-surface: var(--color-surface);
+  --color-surface-dim: var(--color-surface-dim);
+  --color-surface-bright: var(--color-surface-bright);
+  --color-surface-container-lowest: var(--color-surface-container-lowest);
+  --color-surface-container-low: var(--color-surface-container-low);
+  --color-surface-container: var(--color-surface-container);
+  --color-surface-container-high: var(--color-surface-container-high);
+  --color-surface-container-highest: var(--color-surface-container-highest);
+  
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-on-primary: var(--color-on-primary);
+  
+  --color-secondary: var(--color-secondary);
+  --color-on-secondary: var(--color-on-secondary);
+  
+  --color-tertiary: var(--color-tertiary);
+  --color-on-tertiary: var(--color-on-tertiary);
+  
+  --color-error: var(--color-error);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* ==================== GLOBAL PREMIUM PLAYVISION DARK OVERRIDES ==================== */
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #000000 !important;
+  color: #f4f4f5 !important;
+  font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Aside & Header BG */
+aside {
+  background-color: #000000 !important;
+  border-right: 1px solid #121214 !important;
+}
+
+header {
+  background-color: #000000/60 !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid #121214 !important;
+}
+
+/* Cards & Layout Box Overrides */
+
+.bg-\[\#fbf8ff\] {
+  background-color: #09090b !important; /* Premium inner card background */
+}
+
+.bg-\[\#f3f2ff\] {
+  background-color: #0c0c0f !important; /* Indigo accent glow block */
+}
+
+.bg-\[\#f5f3ff\] {
+  background-color: #08080a !important;
+}
+
+.bg-slate-50 {
+  background-color: #050508 !important;
+}
+
+.bg-slate-100 {
+  background-color: #1f1f23 !important;
+}
+
+/* Borders Override */
+.border-slate-100,
+.border-slate-200,
+.border-\[\#ecedff\],
+.border-\[\#f3f2ff\] {
+  border-color: #1f1f23 !important; /* Very thin zinc 800 dark border */
+}
+
+.border-slate-300,
+.border-\[\#acb0ce\] {
+  border-color: #27272a !important;
+}
+
+/* Typography Color Overrides */
+.text-slate-900,
+.text-\[\#2c3149\] {
+  color: #f4f4f5 !important; /* Zinc 100 white */
+}
+
+.text-slate-600,
+.text-slate-500,
+.text-\[\#5c5e6e\],
+.text-\[\#595e78\] {
+  color: #a1a1aa !important; /* Secondary text Zinc 400 */
+}
+
+.text-slate-400,
+.text-\[\#747995\] {
+  color: #71717a !important; /* Muted text Zinc 500 */
+}
+
+/* Inputs & Form Fields */
+input[type="text"],
+input[type="email"],
+textarea {
+  background-color: #18181b !important;
+  border-color: #27272a !important;
+  color: #f4f4f5 !important;
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder {
+  color: #52525b !important;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus {
+  border-color: #4a4bd7 !important;
+  box-shadow: 0 0 0 2px rgba(74, 75, 215, 0.25) !important;
+}
+
+/* Swap Clip / Stop Camera / Toggle Action Buttons */
+.bg-white.border.border-\[\#acb0ce\] {
+  background-color: #18181b !important;
+  border-color: #27272a !important;
+  color: #e4e4e7 !important;
+}
+
+.bg-white.border.border-\[\#acb0ce\]:hover {
+  background-color: #27272a !important;
+  color: #ffffff !important;
+}
+
+.bg-\[\#f3f2ff\].text-\[\#4a4bd7\] {
+  background-color: #09090b !important;
+  color: #ffffff !important;
+  border: 1px solid #18181b !important;
+}
+
+.bg-\[\#f3f2ff\].text-\[\#4a4bd7\]:hover {
+  background-color: #18181b !important;
+  color: #ffffff !important;
+}
+
+/* Table dark theme */
+thead th {
+  background-color: #050508 !important;
+  color: #a1a1aa !important;
+  border-bottom: 1px solid #18181b !important;
+}
+
+tbody tr.bg-white {
+  background-color: #000000 !important;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #050508 !important;
+}
+
+/* Scrollbar customizations */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Visual frame glows */
+.bg-white.border.border-\[\#ecedff\].rounded-2xl {
+  background-color: #09090b !important;
+  border-color: #1f1f23 !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Media player controls overlay */
+.bg-black.bg-opacity-50 {
+  background-color: rgba(9, 9, 11, 0.7) !important;
+}
+
+/* ==================== A4 PRINTING STYLES ==================== */
+@media print {
+  body > *:not(#print-report) { display: none !important; }
+  #print-report { display: block !important; font-family: 'Plus Jakarta Sans', Arial, sans-serif; color: #2c3149; background: #fff; padding: 32px; max-width: 900px; margin: 0 auto; }
+  #print-report h1 { font-size: 22px; font-weight: 800; margin: 0 0 4px; color: #4a4bd7; }
+  #print-report h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin: 20px 0 8px; border-bottom: 1px solid #ecedff; padding-bottom: 4px; color: #5c5e6e; }
+  #print-report h3 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin: 12px 0 6px; color: #747995; }
+  #print-report table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 12px; }
+  #print-report td, #print-report th { padding: 6px 10px; border: 1px solid #ecedff; }
+  #print-report th { background: #f3f2ff; font-weight: 600; text-align: left; }
+  #print-report .grade-A { background: #d1fae5; color: #065f46; font-weight: 800; border-radius: 4px; padding: 2px 8px; }
+  #print-report .grade-B { background: #fef3c7; color: #92400e; font-weight: 800; border-radius: 4px; padding: 2px 8px; }
+  #print-report .grade-C { background: #fee2e2; color: #991b1b; font-weight: 800; border-radius: 4px; padding: 2px 8px; }
+  #print-report .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  #print-report .col-box { border: 1px solid #ecedff; border-radius: 8px; padding: 12px; }
+  #print-report .col-box.numbers { border-color: #acb0ce; }
+  #print-report .col-box.vision { border-color: #4a4bd7; border-width: 2px; }
+  #print-report .col-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  #print-report .col-label.numbers { color: #5c5e6e; }
+  #print-report .col-label.vision { color: #4a4bd7; }
+  #print-report ul { margin: 4px 0; padding-left: 16px; }
+  #print-report li { font-size: 12px; margin: 3px 0; }
+  #print-report .frame-img { max-width: 100%; border-radius: 8px; border: 1px solid #ecedff; margin-top: 8px; }
+  #print-report .meta { color: #747995; font-size: 11px; }
 }
